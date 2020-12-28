@@ -1,1 +1,1 @@
-web: gunicorn DataTable.py:server
+web: gunicorn DataTable:server
