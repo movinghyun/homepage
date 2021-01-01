@@ -9,6 +9,17 @@ from pages import descriptor, home, portfolio
 content = html.Div(id="page-content")
 
 
+app.layout = html.Div(
+        [
+            dcc.Location(id="url"),
+            header,
+            navbar_sales,
+            content,
+        ],
+        style={'padding-top': '1%', "background-color": "#1B2B3C",}
+    )
+
+
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
@@ -28,13 +39,4 @@ def render_page_content(pathname):
 
 
 if __name__ == '__main__':
-    app.layout = html.Div(
-        [
-            dcc.Location(id="url"),
-            header,
-            navbar_sales,
-            content,
-        ],
-        style={'padding-top': '1%', "background-color": "#1B2B3C",}
-    )
-    app.run_server(debug=True)
+    app.run_server(debug=False)
