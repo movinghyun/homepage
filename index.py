@@ -37,4 +37,4 @@ if __name__ == '__main__':
         ],
         style={'padding-top': '1%', "background-color": "#1B2B3C",}
     )
-    app.run_server(debug=False)
+    app.run_server(debug=True)
