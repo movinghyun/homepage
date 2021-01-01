@@ -1,0 +1,585 @@
+,0,1
+Momentum,52 week high,"{
+        rankdir=UD;
+        price[label=""price\n= forward adjusted close price""]
+        price -> ""52w\n = price / 52 week high price""
+        ""52w\n = price / 52 week high price"" -> ""52w\n(52w < 1)""
+        label=""52 week high momentum""
+    }"
+Momentum,"6, 11 month momentum","{
+        rankdir=UD;
+        price[label=""price\n= forward adjusted close price\n(month end)""]
+        price -> ""r6=\n (t-2 - t-7 month price) / t-7 month price""
+        price -> ""r11=\n (t-2 - t-12 month price) / t-12 month price""
+        label=""6, 11 month momentum""
+    }"
+Momentum,"6, 11 residual momentum","{
+        rankdir=UD;
+        ""risk free rate"" -> ""y\n= monthly return - risk free rate""
+        ""monthly return"" -> ""y\n= monthly return - risk free rate""
+        {""y\n= monthly return - risk free rate"", ""x\n= fama french 3 factor""} -> ""monthly residual\n(t-1 ~ t-36 regression, \n36 obs required)""
+        ""monthly residual\n(t-1 ~ t-36 regression, \n36 obs required)"" -> ""e6\n= mean / std dev \n(t-2 ~ t-7 monthly residual)""
+        ""monthly residual\n(t-1 ~ t-36 regression, \n36 obs required)"" -> ""e11\n= mean / std dev \n(t-2 ~ t-12 monthly residual)""
+        label=""6, 11 residual momentum""
+    }"
+Value,"Book to market, book to june end market","{
+        rankdir=UD;
+        seq[label=""seq\n= total equity""]
+        pstk[label=""pstk\n= preferred stock""]
+        book_value[label=""book value\n= seq - pstk""]
+        {seq, pstk} -> book_value
+        {book_value, ""mkt cap""} -> ""bm\n= book value / mkt cap at end of last year""
+        {book_value, ""mkt cap""} -> ""bm\n= book value / mkt cap at end of june""
+
+        label=""Book to market, book to june end market""
+    }"
+Value,Debt to market,"{
+        rankdir=UD;
+        dlc[label=""dlc\n= current portion of long term debt""]
+        dltt[label=""dltt\n= non current liabilities""]
+        debt[label=""debt\n= dlc + dltt""]
+
+        {dlc, dltt} -> debt
+        {debt, ""mkt cap""} -> ""dm \n= debt / mkt cap at end of last year\n(debt != 0)""
+        label=""Debt to market""
+    }"
+Value,Assets to market,"{
+        rankdir=UD;
+        at[label=""at\n= total assets""]
+        {at, ""mkt cap""} -> ""am \n= at / mkt cap at end of last year""
+        label=""Assets to market""
+    }"
+Value,Earnings to price,"{
+        rankdir=UD;
+        ib[label=""ib\n= ongoing operating income""]
+        {ib, ""mkt cap""} -> ""ep \n= ib / mkt cap at end of last year\n(ib > 0)""
+        label=""Earnings to price""
+    }"
+Value,Cashflow to price,"{
+        rankdir=UD;
+        ib[label=""ib\n= ongoing operating income""]
+        dp1[label=""dp1\n= depreciation""]
+        dp2[label=""dp2\n= amortization""]
+        cashflow[label=""cashflow\n= ib + dp1 + dp2""]
+
+        {ib, dp1, dp2} -> cashflow
+        {cashflow, ""mkt cap""} -> ""cp \n= cashflow / mkt cap at end of last year\n(cashflow > 0)""
+        label=""Cashflow to price""
+    }"
+Value,Operating cashflow to price,"{
+        rankdir=UD;
+        oancf[label=""oancf\n= cashflow from operating activities""]
+        {oancf, ""mkt cap""} -> ""ocp \n= oancf / mkt cap at end of last year\n(oancf > 0)""
+        label=""Operating cashflow to price""
+    }"
+Value,Sales to price,"{
+        rankdir=UD;
+        {""sales"", ""mkt cap""} -> ""sp \n= sales / mkt cap at end of last year\n(sales > 0)""
+        label=""Sales to price""
+    }"
+Value,"Sales growth, sales growth rank","{
+        rankdir=UD;
+        {""sales""} -> ""sg \n= 1 fy change rate sales\n(sales > 0)""
+        ""sg \n= 1 fy change rate sales\n(sales > 0)"" -> ""sr\n= weighted average of decile sg rank (t-1 ~ t-5)""
+        label=""Sales growth, sales growth rank""
+    }"
+Value,"Net debt to price, enterprise book to price","{
+        rankdir=UD;
+        dltt[label=""dltt\n= non current liabilities""]
+        dlc[label=""dlc\n= current portion of long term debt""]
+        pstk[label=""pstk\n= preferred stock""]
+        che1[label=""che1\n= cash and cash equivalent""]
+        che2[label=""che2\n= current financial assets""]
+        ceq[label=""ceq\n= total equity""]
+
+        net_debt[label=""net debt\n= (dltt + dlc + pstk) - (che1 + che2)""]
+        noa_book[label=""noa book\n= (ceq - pstk) + net_debt""]
+        noa_mkt_cap[label=""noa mkt cap\n= net debt + mkt cap at end of last year""]
+
+        ndp[label=""ndp\n= net debt / mkt cap at end of last year\n(net debt > 0)""]
+        ebp[label=""ebp\n= noa book / noa mkt cap\n(noa book, noa mkt cap > 0)""]
+
+        {dltt, dlc, pstk, che1, che2} -> net_debt
+        {ceq, pstk, net_debt} -> noa_book
+        {net_debt, ""mkt cap""} -> {ndp, noa_mkt_cap}
+        {noa_book, noa_mkt_cap} -> ebp
+
+        label=""Net debt to price, enterprise book to price""
+    }"
+Value,Enterprise multiple,"{
+        rankdir=UD;
+
+        dltt[label=""dltt\n= non current liabilities""]
+        dlc[label=""dlc\n= current portion of long term debt""]
+        pstkrv[label=""pstk\n= preferred stock""]
+        che1[label=""che1\n= cash and cash equivalent""]
+        che2[label=""che2\n= current financial assets""]
+        oibdp[label=""oibdp\n= ebitda""]
+
+        ev[label=""ev\n= dlc + dltt + pstkrv - (che1 + che2) \n+ mkt cap at end of last year""]
+
+        em[label=""em\n= ev / oibdp""]
+
+        {dltt, dlc, pstkrv, che1, che2, ""mkt cap""} -> ev
+        {ev, oibdp} -> em
+
+        label=""Enterprise multiple""
+    }"
+Investment,Abnormal corporate investment,"{
+        rankdir=UD;
+        capx1[label=""capx1\n= 1 fy change property plant and equipment""]
+        capx2[label=""capx2\n= 1 fy change intangible assets""]
+        capx3[label=""capx3\n= 1 fy change non current biological assets""]
+        capx4[label=""capx3\n= depreciation""]
+        capx5[label=""capx3\n= amortization""]
+
+        capx[label=""capx\n= capx1 + capx2 + capx3.fillna(0) + capx4 + capx5""]
+
+        ce[label=""ce\n= capx / sale\n(sales >= 10e6)""]
+        ce_avg[label=""ce_avg\n= 1~3 fy shift mean ce""]
+
+        aci[label=""aci\n= (ce / ce_avg) - 1""]
+
+        {capx1, capx2, capx3, capx4, capx5} -> capx
+        {capx, sale} -> ce
+        ce -> ce_avg
+        {ce, ce_avg} -> aci
+
+        label=""Abnormal corporate investment""
+    }"
+Investment,Investment to assets,"{
+        rankdir=UD;
+        at[labe=""at\n = total assets""]
+        at -> ""ia \n= 1 fy change rate at""
+        label=""Investment to assets""
+    }"
+Investment,Change ppe inventory to assets,"{
+        rankdir=UD;
+        ppegt[label=""ppegt\n= property plant and equipment""]
+        invt[label=""invt\n= inventories""]
+        at[label=""at\n= total assets""]
+
+        dpia[label=""dpia\n= (1 fy change ppegt + 1 fy change invt) / 1 fy shift at""]
+
+        {ppegt, invt, at} -> dpia
+        label=""Change ppe inventory to assets""
+    }"
+Investment,"Net operating assets, changes in net operating assets","{
+        rankdir=UD;
+        dlc[label=""dlc\n= current portion of long term debt""]
+        dltt[label=""dltt\n= non current liabilities""]
+        mib[label=""mib\n= non controlling interest equity""]
+        pstk[label=""pstk\n= preferred stock""]
+        ceq[label=""ceq\n= total equity""]
+        che1[label=""che1\n= cash and cash equivalent""]
+        che2[label=""che2\n= current financial assets""]
+        at[label=""total assets""]
+
+        noa[label=""noa\n= [(dlc.fillna(0) + dltt.fillna(0) + mib.fillna(0) + pstk.fillna(0)
+         + ceq - pstk) - (che1 + che2)] / 1 fy shift at""]
+        dnoa[label=""dnoa\n= 1 fy change noa / 1 fy shift at""]
+
+        {dlc, dltt, mib, pstk, ceq, pstk, che1, che2, at} -> noa
+        {noa, at} -> dnoa
+
+        label=""Net operating assets, changes in net operating assets""
+    }"
+Investment,Changes in long term net operating assets,"{
+        rankdir=UD;
+        ppent[label=""dppent\n= 1 fy change property plant and equipment""]
+        intan[label=""dintan\n= 1 fy change intangible assets""]
+        ao[label=""dao\n = 1 fy change other non current assets""]
+        lo[label=""dlo\n = 1 fy change other non current liabilities""]
+        dp1[label=""dp1\n = depreciation""]
+        dp2[label=""dp2\n = amortization""]
+        
+        at[label=""total assets""]
+
+        dlno[label=""dlno\n= (dppent + dintan + dao - dlo + dp1 + dp2) / 2 fy mean total assets""]
+
+        {ppent, intan, ao, lo, dp1, dp2, at} -> dlno
+
+
+        label=""changes in long term net operating assets""
+    }"
+Investment,"Investment growth 1, 2, 3","{
+        rankdir=UD;
+        capx1[label=""capx1\n= 1 fy change property plant and equipment""]
+        capx2[label=""capx2\n= 1 fy change intangible assets""]
+        capx3[label=""capx3\n= 1 fy change non current biological assets""]
+        capx4[label=""capx3\n= depreciation""]
+        capx5[label=""capx3\n= amortization""]
+
+        capx[label=""capx\n= capx1 + capx2 + capx3.fillna(0) + capx4 + capx5""]
+
+        {capx1, capx2, capx3, capx4, capx5} -> capx
+
+        capx -> ""ig1\n= 1 fy change rate capx""
+        capx -> ""ig2\n= 2 fy change rate capx""
+        capx -> ""ig3\n= 3 fy change rate capx""
+
+        label=""Investment growth 1, 2, 3""
+    }"
+Investment,Net stock issue,"{
+        rankdir=UD;
+        ajex[label=""ajex\n= forward adjust factor""]
+        csho[label=""csho\n= shrs out (raw, end of fiscal)""]
+
+        adj_csho[label=""adj_csho\n= csho / ajex\n(ajex, csho > 0)""]
+        nsi[label=""nsi\n= log(1 year change adj csho)""]
+
+        {ajex, csho} -> adj_csho -> nsi
+
+        label=""Net stock issue""
+    }"
+Investment,Composite equity issuance,"{
+        rankdir=UD;
+        price[label=""price\n= forward adjusted close price""]
+        me[label=""me\n= mkt cap""]
+
+        cei[label=""cei\n= log(me / t-5 year me) - log(price / t-5 year price)\n(me, crsp > 0)""]
+        {price, me} -> cei
+
+        label=""Composite equity issuance""
+    }"
+Investment,Composite debt issuance," {
+        rankdir=UD;
+        dltt[label=""dltt\n= non current liabilities""]
+        dlc[label=""dlc\n= current portion of long term debt""]
+        debt[label=""debt\n= 5 fy change (dltt + dlc)""]
+        cdi[label=""cdi\n= log(debt)\n(debt > 0)""]
+        {dltt, dlc} -> debt -> cdi
+
+        label=""Composite debt issuance""
+    }"
+Investment,"Inventory growth, inventory changes","{
+        rankdir=UD;
+        invt[label=""invt\n= inventories""]
+        at[label=""at\n= total assets""]
+        
+        ivg[label=""ivg\n= 1 fy change rate invt""]
+        ivc[label=""ivc\n= 1 fy change invt / 2 fy mean at\n(invt != 0)""]
+
+        invt -> ivg
+        {invt, at} -> ivc
+
+        label=""Inventory growth, inventory changes""
+    }"
+Investment,"Operating accruals, percent operating accruals","{
+        rankdir=UD;
+        ni[label=""ni\n= net income""]
+        oancf[label=""oancf\n= cashflow from operating activities""]
+        at[label=""at\n= total assets""]
+
+        op_acr[label=""op acr\n= ni - oancf""]
+
+        oa[label=""oa\n= op acr / 1 fy shift at""]
+        poa[label=""poa\n= op acr / abs(ni)""]
+
+        {ni, oancf} -> op_acr
+        {op_acr, at} -> oa
+        {op_acr, ni} -> poa
+
+        label=""Operating accruals, percent operating accruals""
+    }"
+Investment,"Total accruals, percent total accruals","{
+        rankdir=UD;
+        ni[label=""ni\n= net income""]
+        oancf_ivncf_fincf[label=""oancf ivncf fincf\n= adj cashflow""]
+        sstk[label=""sstk\n= paid in capital increase""]
+        prstkc[label=""prstkc\n= purchase of treasury stock""]
+        dv[label=""dv\n= dividend""]
+        at[label=""at\n= total assets""]
+        
+        tt_acr[label=""tt acr\n= ni - oancf ivncf fincf 
+        + sstk.fillna(0) - prstkc.fillna(0) - dv.fillna(0)""]
+
+        ta[label=""ta\n= tt acr / 1 fy shift at""]
+        pta[label=""pta\n= tt acr / abs(ni)""]
+
+        {ni, oancf_ivncf_fincf, sstk, prstkc, dv} -> tt_acr
+        {tt_acr, at} -> ta
+        {tt_acr, ni} -> pta
+
+        label=""Total accruals, percent total accruals""
+    }"
+Investment,"Discretionary accruals, absoulute discretionary accruals, percent discretionary accruals","{
+        rankdir=UD;
+        ni[label=""ni\n= net income""]
+        oancf[label=""oancf\n= cashflow from operating activities""]
+        at[label=""at\n= total assets""]
+        rect[label=""rect\n= trade receivables""]
+        ppegt[label=""ppegt\n= property plant and equipment""]
+        industry[label=""industry\n= 25 fnguide insdustry""]
+
+        y[label=""y\n= (ni - oancf) / 1 fy shift at\n(oa)""]
+        x0[label=""x0\n= 1 / 1 fy shift at""]
+        x1[label=""x1\n= (1 fy change sales - 1 fy change rect) / 1 fy shift at""]
+        x2[label=""x2\n= ppegt / 1 fy shift at""]
+        
+        dac[label=""dac\n= cross sectional ols residual groupby industry\n(obs >= 6)""]
+        abs_dac[label=""abs_dac\n= abs(dac)""]
+        pda[label=""pda\n= (dac * 1 fy shift at) / abs(ni)""]
+
+        {ni, oancf, at} -> y -> dac
+        {at} -> x0 -> dac
+        {sales, rect, at} -> x1 -> dac
+        {ppegt, at} -> x2 -> dac
+        industry -> dac
+
+        dac -> {abs_dac, pda}
+        at -> pda
+        label=""Discretionary accruals, absoulute discretionary accruals, percent discretionary accruals""
+    }"
+Investment,"Changes in net noncash working capital, in current operating assets, in current operating liabilities","{
+        rankdir=UD;
+        act[label=""act\n= current assets""]
+        che1[label=""che1\n= cash and cash equivalent""]
+        che2[label=""che2\n= current financial assets""]
+        lct[label=""lct\n= current liabilities""]
+        dlc[label=""dlc\n= current portion of long term debt""]
+        at[label=""at\n= total assets""]
+
+        dcoa[label=""dcoa\n= 1 fy change (act - che1 - che2) / 1 fy shift at""]
+        dcol[label=""dcol\n= 1 fy change lct - 1 fy change dlc.fillna(0)) / 1 fy shift at""]
+        dwc[label=""dwc\n= dcoa - dcol""]
+        
+        {act, che1, che2, at} -> dcoa -> dwc
+        {lct, dlc, at} -> dcol -> dwc
+
+        label=""Changes in net noncash working capital, in current operating assets, in current operating liabilities""
+    }"
+Investment,"Changes in net noncurrent operating assets, in noncurrent operating assets, in noncurrent operating liabilities","{
+        rankdir=UD;
+        act[label=""act\n= current assets""]
+        ivao[label=""ivao\n= long term financial instruments""]
+        lt[label=""lt\n= total liabilities""]
+        lct[label=""lct\n= current liabilities""]
+        dltt[label=""dltt\n= non current liabilities""]
+        at[label=""at\n= total assets""]
+
+        dnca[label=""dnca\n= 1 fy change (at - act) - 1 fy change ivao.fillna(0) / 1 fy shift at""]
+        dncl[label=""dncl\n= 1 fy change (lt - lct) - 1 fy change dltt.fillna(0)) / 1 fy shift at""]
+        dnco[label=""dnco\n= dnca - dncl""]
+        
+        {act, ivao, at} -> dnca -> dnco
+        {lt, lct, dltt, at} -> dncl -> dnco
+
+        label=""Changes in net noncurrent operating assets, in noncurrent operating assets, in noncurrent operating liabilities""
+    }"
+Investment,"Changes in net financial assets, in short-term investments, in long-term investments, in financial liabilities","{
+        rankdir=UD;
+        ivst[label=""ivst\n= current financial assets""]
+        ivao[label=""ivao\n= long term financial instruments""]
+        dltt[label=""dltt\n= non current liabilities""]
+        dlc[label=""dlc\n= current portion of long term debt""]
+        pstk[label=""pstk\n= preferred stock""]
+        at[label=""at\n= total assets""]
+
+        ivst -> dsti_filter
+        ivao -> dlti_filter
+
+        dsti_filter[label=""dsti filter\n= (ivst != 0) | (1 fy shift ivst notna)""]
+        dlti_filter[label=""dlti filter\n= (ivao != 0) | (1 fy shift ivao notna)""]
+
+        one_fy_change[label=""1 fy change""]
+
+        {ivst, ivao, dltt, dlc, pstk} -> one_fy_change
+
+        one_fy_change -> {dfnl_filter, dfin_filter}
+        dfnl_filter[label=""dfnl filter\n= (dltt.notna() | dlc.notna() | pstk.notna())""]
+        dfin_filter[label=""dfin filter\n= (ivst.notna() | ivao.notna() 
+        | dltt.notna() | dlc.notna() | pstk.notna())""]
+
+        {dsti_filter, one_fy_change, at} -> dsti
+        {dlti_filter, one_fy_change, at} -> dlti
+        {dfnl_filter, one_fy_change, at} -> dfnl
+        {dfin_filter, one_fy_change, at} -> dfin
+
+        dsti[label=""dsti\n= ivst[dsti filter] / 1 fy shift at"", color=""pink"", style=""filled""]
+        dlti[label=""dsti\n= ivao[dlti filter] / 1 fy shift at"", color=""pink"", style=""filled""]
+        dfnl[label=""dsti\n= [dltt.fillna(0) + dlc.fillna(0) + pstk.fillna(0)][dfnl_filter]
+         / 1 fy shift at"", color=""pink"", style=""filled""]
+        dfin[label=""dsti\n= [(dsti.fillna(0) + dlti.fillna(0)) - dfnl][dfin_filter] 
+        / 1 fy shift at"", color=""pink"", style=""filled""]
+
+        label=""Changes in net financial assets, in short-term investments,
+         in long-term investments, in financial liabilities""
+    }"
+Investment,Changes in book equity,"{
+        rankdir=UD;
+        ceq1[label=""ceq1\n= total equity""]
+        ceq2[label=""ceq2\n= preferred stock""]
+        at[label=""at\n= total assets""]
+
+        book[label=""book\n= ceq1 - ceq2""]
+        dbe[label=""dbe\n= 1 fy change book / 1 fy shift at"", color=""pink"", style=""filled""]
+
+        {ceq1, ceq2} -> book
+        {book, at} -> dbe
+        label=""Changes in book equity""
+    }"
+Profitability,"Return on equity, change in return on equity","{
+        rankdir=UD;
+        ib[label=""ib\n= ongoing operating income""]
+        seq[label=""seq\n= total equity""]
+        pstk[label=""pstk\n= preferred stock""]
+
+        book[label=""book\n= seq - pstk""]
+
+        roe[label=""roe\n= ib / 1 fy shift book"", color=""pink"", style=""filled""]
+        droe[label=""droe\n= 1 fy change roe"", color=""pink"", style=""filled""]
+
+
+        {seq, pstk} -> book
+        {book, ib} -> roe ->droe
+        label=""Return on equity, change in return on equity""
+    }"
+Profitability,"Return on assets, change in return on assets","{
+        rankdir=UD;
+        ib[label=""ib\n= ongoing operating income""]
+        at[label=""at\n= total assets""]
+
+        roa[label=""roa\n= ib / 1 fy shift at"", color=""pink"", style=""filled""]
+        droa[label=""droa\n= 1 fy change roa"", color=""pink"", style=""filled""]
+
+        {at, ib} -> roa ->droa
+        label=""Return on assets, change in return on assets""
+    }"
+Profitability,"Return on net operating assets, profit margin, assets turnover","{
+        rankdir=UD;
+        oiadp1[label=""oiadp1\n= ebitda""]
+        oiadp2[label=""oiadp2\n= depreciation""]
+        oiadp3[label=""oiadp3\n= amortization""]
+        che1[label=""che1\n= cash and cash equivalent""]
+        che2[label=""che2\n= current financial assets""]
+        ivao[label=""ivao\n= long term financial instruments""]
+        dlc[label=""dlc\n= current portion of long term debt""]
+        dltt[label=""dltt\n= non current liabilities""]
+        mib[label=""mib\n= non controlling interest equity""]
+        pstk[label=""pstk\n= preferred stock""]
+        ceq[label=""ceq\n= total equity""]
+        sale[label=""sale\n= sales""]
+
+        oiadp[label=""oiadp\n= oiadp1 - oiadp2 - oiadp3""]
+
+        noa[label=""noa\n= dlc.fillna(0) + dltt.fillna(0) + mib.fillna(0) + pstk.fillna(0) + ceq - pstk
+        - (che1 + che2 + ivao.fillna(0))\n(noa > 0)""]
+
+        {dlc, dltt, mib, pstk, ceq, pstk, che1, che2, ivao} -> noa
+
+        rna[label=""rna\n= oiadp / 1 fy shift noa"", color=""pink"", style=""filled""]
+        ato[label=""ato\n= sale / 1 fy shift noa"", color=""pink"", style=""filled""]
+        pm[label=""pm\n= oiadp / sales"", color=""pink"", style=""filled""]
+
+
+        {oiadp1, oiadp2, oiadp3} -> oiadp
+
+        {noa, oiadp} -> rna
+        {sale, oiadp} -> pm
+        {sale, noa} -> ato
+        
+        label=""Return on net operating assets, profit margin, assets turnover""
+    }"
+Profitability,Capital turnover,"{
+        rankdir=UD;
+        sale[label=""sale\n= sales""]
+        at[label=""at\n= total assets""]
+        
+        cto[label=""cto\n= sale / 1 fy shift at"", color=""pink"", style=""filled""]
+        
+        {sale, at} -> cto
+        
+        label=""Capital turnover""
+    }"
+Profitability,"Gross profits to assets, gross profits to lagged assets","{
+        rankdir=UD;
+        revt[label=""revt\n= sales""]
+        cogs[label=""cogs\n= cost of sales""]
+        at[label=""at\n= total assets""]
+
+        gp[label=""gp\n= revt - cogs""]
+
+        {revt, cogs} -> gp -> {gpa, gla}
+        at -> {gpa, gla}
+
+        gpa[label=""gpa\n= gp / at"", color=""pink"", style=""filled""]
+        gla[label=""gla\n= gp / 1 fy shift at"", color=""pink"", style=""filled""]
+        
+        label=""Gross profits to assets, gross profits to lagged assets""
+    }"
+Profitability,"Operating profits to equity, operating profits to lagged equity","{
+        rankdir=UD;
+        revt[label=""revt\n= sales""]
+        cogs[label=""cogs\n= cost of sales""]
+        xsga[label=""xsga\n= selling general administrative expenses""]
+        xint[label=""xint\n= interest expenses""]
+        seq[label=""seq\n= total equity""]
+        pstk[label=""pstk\n= preferred stock""]
+
+        book[label=""book\n= seq - pstk""]
+        op[label=""op\n= revt - cogs.fillna(0) - xsga.fillna(0) - xint.fillna(0)""]
+
+        filt[label=""filt\n= cogs.notna() | xsga.notna() | xint.notna()""] 
+
+        ope[label=""ope\n= op[filt] / book"", color=""pink"", style=""filled""]
+        ole[label=""ole\n= op[filt] / 1 fy shift book"", color=""pink"", style=""filled""]
+
+        {seq, pstk} -> book
+        {revt, cogs, xsga, xint} -> op
+        {cogs, xsga, xint} -> filt
+
+        {op, filt, book} -> {ope, ole}
+
+
+        label=""Operating profits to equity, operating profits to lagged equity""
+    }"
+Profitability,"Operating profits to assets, operating profits to lagged assets","{
+        rankdir=UD;
+        revt[label=""revt\n= sales""]
+        cogs[label=""cogs\n= cost of sales""]
+        xsga[label=""xsga\n= selling general administrative expenses""]
+        xint[label=""xint\n= interest expenses""]
+        at[label=""at\n= total assets""]
+
+        op[label=""op\n= revt - cogs - xsga - xint.fillna(0)""]
+
+        ope[label=""ope\n= op / at"", color=""pink"", style=""filled""]
+        ole[label=""ole\n= op / 1 fy shift at"", color=""pink"", style=""filled""]
+
+        {revt, cogs, xsga, xint} -> op
+
+        {op, at} -> {ope, ole}
+
+
+        label=""Operating profits to assets, operating profits to lagged assets""
+    }"
+Profitability,"Cash based pperating profits to assets, cash based operating profits to lagged assets","{
+        rankdir=UD;
+        revt[label=""revt\n= sales""]
+        cogs[label=""cogs\n= cost of sales""]
+        xsga[label=""xsga\n= selling general administrative expenses""]
+        xrd[label=""xrd\n= research and development expenses""]
+        rect[label=""rect\n= trade receivables""]
+        invt[label=""invt\n= inventories""]
+        xpp[label=""xpp\n= prepaid expenses""]
+        drc_drlt[label=""drc drlt\n= unearned income""]
+        ap[label=""ap\n= trade payables""]
+        xacc[label=""xacc\n= accrued expenses""]
+        at[label=""at\n= total assets""]
+
+
+        fy_1_change[label=""1 fy change""]
+        {rect, invt, xpp, drc_drlt, ap, xacc} -> fy_1_change -> cp
+        {revt, cogs, xsga, xrd} -> cp
+
+        cp[label=""cp\n= revt - cogs - xsga + xrd.fillna(0)
+        - rect.fillna(0) - invt.fillna(0) - xpp.fillna(0) + drc_drlt.fillna(0) + ap.fillna(0) + xacc.fillna(0)""]
+
+        cop[label=""cop\n= cp / at"", color=""pink"", style=""filled""]
+        cla[label=""cla\n= cp / 1 fy shift at"", color=""pink"", style=""filled""]
+
+        {cp, at} -> {cop, cla}
+        
+        label=""Cash based pperating profits to assets, cash based operating profits to lagged assets""
+    }"
