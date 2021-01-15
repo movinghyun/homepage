@@ -3,8 +3,9 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from main import app, header, navbar_sales, server
-from pages import descriptor, home, portfolio
+from main import app, header, navbar_sales
+from pages import home, aboutme
+from pages.portfolio import portfolio
 
 content = html.Div(id="page-content")
 
@@ -24,10 +25,10 @@ app.layout = html.Div(
 def render_page_content(pathname):
     if pathname == "/":
         return home.create_layout()
-    elif pathname == "/page-1":
-        return descriptor.create_layout()
-    elif pathname == "/page-2":
+    elif pathname == "/portfolio":
         return portfolio.create_layout()
+    elif pathname == "/about":
+        return aboutme.create_layout()
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
         [

@@ -49,15 +49,15 @@ navbar_sales = html.Div([
         className='col-2'),
     html.Div([
         dcc.Link(
-            html.H4(children='Descriptor', style={'textAlign': 'center', "color": color["main"]}),
-            href='/page-1'
+            html.H4(children='Portfolio', style={'textAlign': 'center', "color": color["main"]}),
+            href='/portfolio'
         )
     ],
         className='col-2'),
     html.Div([
         dcc.Link(
-            html.H4(children='?_?', style={'textAlign': 'center', "color": color["main"]}),
-            href='/page-2'
+            html.H4(children='About Me', style={'textAlign': 'center', "color": color["main"]}),
+            href='/about'
         )
     ],
         className='col-2'),

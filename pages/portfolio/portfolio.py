@@ -1,9 +1,9 @@
 import dash_bootstrap_components as dbc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from pages import descriptor
 
 from main import app
+from pages.portfolio import descriptor
 
 
 def create_layout():

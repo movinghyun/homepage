@@ -2,14 +2,15 @@ import pathlib
 
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_interactive_graphviz
 import pandas as pd
 from dash.dependencies import Input, Output
+
 from main import app
 
-import dash_interactive_graphviz
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
-DATA_PATH = PATH.joinpath("../data").resolve()
+DATA_PATH = PATH.joinpath("../../data").resolve()
 
 a = pd.read_csv(DATA_PATH / "a.csv")
 
