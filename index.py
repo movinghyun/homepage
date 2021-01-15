@@ -3,7 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from main import app, header, navbar_sales
+from main import app, header, navbar_sales, server
 from pages import home, aboutme
 from pages.portfolio import portfolio
 
