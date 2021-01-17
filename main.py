@@ -22,10 +22,10 @@ header = html.Div([
                 )], className='col-8', style={'padding-top': '1%'}
     ),
     html.Div([
-        html.Img(
+        """html.Img(
             src=app.get_asset_url('logo_.png'),
             height='43 px',
-            width='auto')
+            width='auto')"""
     ],
         className='col-2',
         style={
