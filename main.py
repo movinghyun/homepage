@@ -56,8 +56,8 @@ navbar_sales = html.Div([
         className='col-2'),
     html.Div([
         dcc.Link(
-            html.H4(children='About Me', style={'textAlign': 'center', "color": color["main"]}),
-            href='/about'
+            html.H4(children='Resource', style={'textAlign': 'center', "color": color["main"]}),
+            href='/resource'
         )
     ],
         className='col-2'),
