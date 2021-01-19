@@ -51,31 +51,26 @@ def create_layout():
             }
         ),
         dbc.Row([
-            dbc.Col([], md=8),
-            dbc.Col([
-                dbc.Row([
-                    dbc.Col(html.A([
-                        html.Img(
-                            src=app.get_asset_url('GitHub-Mark-Light-120px-plus.png'),
-                            height='60 px',
-                            width='auto')
-                    ], href='https://github.com/movinghyun', target='_blank'), md=3),
-                    dbc.Col(html.A([
-                        html.Img(
-                            src=app.get_asset_url('LI-In-Bug.png'),
-                            height='60 px',
-                            width='auto')
-                    ], href='https://www.linkedin.com/in/movinghyun', target='_blank'), md=3),
-                    dbc.Col(html.A([
-                        html.Img(
-                            src=app.get_asset_url('youtube_social_icon_red.png'),
-                            height='60 px',
-                            width='auto')
-                    ], href='https://www.youtube.com/channel/UCDtjhl3QW1IEtf0TQr9i4mQ', target='_blank'), md=3),
-                ])
-            ], md=2),
+            dbc.Col(html.A([
+                html.Img(
+                    src=app.get_asset_url('GitHub-Mark-Light-120px-plus.png'),
+                    style={"max-width": "100%", 'height':"auto"}
+                )
+            ], href='https://github.com/movinghyun', target='_blank'), width='auto'),
+            dbc.Col(html.A([
+                html.Img(
+                    src=app.get_asset_url('linkedin.png'),
+                    style={"max-width": "100%", 'height':"auto"}
+                )
+            ], href='https://www.linkedin.com/in/movinghyun', target='_blank'),  width='auto'),
+            dbc.Col(html.A([
+                html.Img(
+                    src=app.get_asset_url('youtube.png'),
+                    style={"max-width": "100%", 'height': "auto"}
+                )
+            ], href='https://www.youtube.com/channel/UCDtjhl3QW1IEtf0TQr9i4mQ', target='_blank'),  width='auto'),
             dbc.Col([], md=2)
-            ], style={
-                "padding": "1%", 'align-items': 'center', 'color': '#C9C8BF'
-            }),
-        ])
+        ], justify="end", style={
+            "padding": "1%", 'align-items': 'center', 'color': '#C9C8BF'
+        }),
+    ])
