@@ -9,9 +9,10 @@ color = {
     "accent": "#C09B64"
 }
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], meta_tags=[
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO], meta_tags=[
     {"name": "viewport", "content": "width=device-width, initial-scale=1"}
 ])
+app.title = "Dong-Hyun's Homepage"
 server = app.server
 
 header = html.Div([
