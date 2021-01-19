@@ -15,57 +15,61 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO], meta_tags
 app.title = "Dong-Hyun's Homepage"
 server = app.server
 
-header = html.Div([
-    html.Div([], className='col-2'),
-    html.Div([
-        html.H1(children="Dong-Hyun's Homepage",
+
+header = dbc.Row(
+    [
+        dbc.Col([],
+            #html.Img(
+            #    src=app.get_asset_url('logo_transparent.png'),
+            #    height='auto',
+            #    width='50 px'
+            #),
+        md=3, style={
+                'align-items': 'center',
+                'padding-top': '1%',
+                'height': 'auto'}
+        ),
+        dbc.Col(
+            html.H1(
+                children="Dong-Hyun's Homepage",
                 style={'textAlign': 'center', "color": color["modify"]}
-                )], className='col-8', style={'padding-top': '1%'}
-    ),
-    html.Div([
-        # html.Img(
-        #    src=app.get_asset_url('logo_.png'),
-        #    height='43 px',
-        #    width='auto')
-    ],
-        className='col-2',
-        style={
-            'align-items': 'center',
-            'padding-top': '1%',
-            'height': 'auto'})
-],
-    className='row',
-    style={'height': '4%',
-           'background-color': color["main"]}
+            ), md=6, style={'padding-top': '1%'}
+        ),
+        dbc.Col(
+            [], md=3
+        )
+    ], style={'height': '4%',
+              'background-color': color["main"]}
 )
 
-navbar_sales = html.Div([
-    html.Div([], className='col-3'),
-    html.Div([
-        dcc.Link(
-            html.H4(children='Home', style={'textAlign': 'center', "color": color["main"]}),
-            href='/'
-        )
-    ],
-        className='col-2'),
-    html.Div([
-        dcc.Link(
-            html.H4(children='Portfolio', style={'textAlign': 'center', "color": color["main"]}),
-            href='/portfolio'
-        )
-    ],
-        className='col-2'),
-    html.Div([
-        dcc.Link(
-            html.H4(children='Resource', style={'textAlign': 'center', "color": color["main"]}),
-            href='/resource'
-        )
-    ],
-        className='col-2'),
-    html.Div([], className='col-3')
-],
-    className='row',
-    style={'background-color': color["modify"],
-           'box-shadow': f'2px 5px 5px 1px {color["accent"]}'}
+navbar_sales = dbc.Row(
+    [
+        dbc.Col(
+            [], md=3
+        ),
+        dbc.Col(
+            dcc.Link(
+                html.H4(children='Home', style={'textAlign': 'center', "color": color["main"]}),
+                href='/'
+            ), md=2
+        ),
+        dbc.Col(
+            dcc.Link(
+                html.H4(children='Portfolio', style={'textAlign': 'center', "color": color["main"]}),
+                href='/portfolio'
+            ), md=2
+        ),
+        dbc.Col(
+            dcc.Link(
+                html.H4(children='Resource', style={'textAlign': 'center', "color": color["main"]}),
+                href='/resource'
+            ), md=2
+        ),
+        dbc.Col(
+            [], md=3
+        ),
+    ], style={
+        'background-color': color["modify"],
+        'box-shadow': f'2px 5px 5px 1px {color["accent"]}'
+    }
 )
-

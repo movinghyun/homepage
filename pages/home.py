@@ -18,7 +18,7 @@ CV_TXT = '''
 ## Career
 - Hanyang Biz-lab quantitative analytics internship(2018.09~2018.12)
 - Handa-partners researcher(2019~)
-##Research
+## Research
 - Han, M., Lee, D. H., & Kang, H. G. (2020). Market anomalies in the Korean stock market. Journal of Derivatives and Quantitative Studies: Seonmul yeon’gu.
 - Do Some Bitcoin Exchanges Lead the Others? An Empirical Analysis ‘in preparation’ 
 - Agnostic fundamental analysis works in Korea ‘in preparation’ 
@@ -50,29 +50,32 @@ def create_layout():
                 "padding": "1%", 'align-items': 'center', 'color': '#C9C8BF'
             }
         ),
-        html.Div([
-            html.Div([], className='col-7'),
-            html.A([
-                html.Img(
-                    src=app.get_asset_url('GitHub-Mark-Light-120px-plus.png'),
-                    height='auto',
-                    width='123 px')
-            ], className='col-1', href='https://github.com/movinghyun', target='_blank'),
-
-            html.A([
-                html.Img(
-                    src=app.get_asset_url('LI-In-Bug.png'),
-                    height='auto',
-                    width='123 px')
-                ], className='col-1', href='https://www.linkedin.com/in/movinghyun', target='_blank'),
-            html.A([
-                html.Img(
-                    src=app.get_asset_url('youtube_social_icon_red.png'),
-                    height='auto',
-                    width='123 px')
-            ], className='col-1', href='https://www.youtube.com/channel/UCDtjhl3QW1IEtf0TQr9i4mQ', target='_blank'),
-            html.Div([], className='col-2')
-            ], className='row', style={
+        dbc.Row([
+            dbc.Col([], md=8),
+            dbc.Col([
+                dbc.Row([
+                    dbc.Col(html.A([
+                        html.Img(
+                            src=app.get_asset_url('GitHub-Mark-Light-120px-plus.png'),
+                            height='60 px',
+                            width='auto')
+                    ], href='https://github.com/movinghyun', target='_blank'), md=3),
+                    dbc.Col(html.A([
+                        html.Img(
+                            src=app.get_asset_url('LI-In-Bug.png'),
+                            height='60 px',
+                            width='auto')
+                    ], href='https://www.linkedin.com/in/movinghyun', target='_blank'), md=3),
+                    dbc.Col(html.A([
+                        html.Img(
+                            src=app.get_asset_url('youtube_social_icon_red.png'),
+                            height='60 px',
+                            width='auto')
+                    ], href='https://www.youtube.com/channel/UCDtjhl3QW1IEtf0TQr9i4mQ', target='_blank'), md=3),
+                ])
+            ], md=2),
+            dbc.Col([], md=2)
+            ], style={
                 "padding": "1%", 'align-items': 'center', 'color': '#C9C8BF'
             }),
         ])
