@@ -32,51 +32,20 @@ CV_TXT = '''
 
 
 def create_layout():
-    return html.Div([
-        html.Div(
-            [
-                html.Div(
-                    [], className='col-2'
-                ),
-                html.Div(
-                    dcc.Markdown(CV_TXT), className='col-8'
-                ),
-                html.Div(
-                    [], className='col-2'
-                )
-            ],
-            className='row',
-            style={
-                "padding": "1%", 'align-items': 'center', 'color': '#C9C8BF'
-            }
-        ),
-        dbc.Row([
-            dbc.Col(html.A([
-                html.Img(
-                    src=app.get_asset_url('notion_.png'),
-                    style={"max-width": "100%", 'height': "auto"}
-                )
-            ], href='https://www.notion.so/movinghyun/6a1bb55359e948a09ce24ee474ad6cd0?v=8a9a4c44d9c84232b440cb29da29b555', target='_blank'), width='auto'),
-            dbc.Col(html.A([
-                html.Img(
-                    src=app.get_asset_url('GitHub_.png'),
-                    style={"max-width": "100%", 'height':"auto"}
-                )
-            ], href='https://github.com/movinghyun', target='_blank'), width='auto'),
-            dbc.Col(html.A([
-                html.Img(
-                    src=app.get_asset_url('linkedin_.png'),
-                    style={"max-width": "100%", 'height':"auto"}
-                )
-            ], href='https://www.linkedin.com/in/movinghyun', target='_blank'),  width='auto'),
-            dbc.Col(html.A([
-                html.Img(
-                    src=app.get_asset_url('youtube_.png'),
-                    style={"max-width": "100%", 'height': "auto"}
-                )
-            ], href='https://www.youtube.com/channel/UCDtjhl3QW1IEtf0TQr9i4mQ', target='_blank'),  width='auto'),
-            dbc.Col([], md=2)
-        ], justify="end", style={
+    return html.Div(
+        [
+            html.Div(
+                [], className='col-2'
+            ),
+            html.Div(
+                dcc.Markdown(CV_TXT), className='col-8'
+            ),
+            html.Div(
+                [], className='col-2'
+            )
+        ],
+        className='row',
+        style={
             "padding": "1%", 'align-items': 'center', 'color': '#C9C8BF'
-        }),
-    ])
+        }
+    ),

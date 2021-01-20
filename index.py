@@ -3,22 +3,22 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from main import app, header, navbar_sales, server
+from main import app, header, footer, navbar_sales, server
 from pages import resource, home
 from pages.portfolio import portfolio
 
-content = html.Div(id="page-content")
 
-
-app.layout = html.Div(
+app.layout = dbc.Container(html.Div(
         [
             dcc.Location(id="url"),
             header,
             navbar_sales,
-            content,
+            html.Div(id="page-content"),
+            html.Hr(style={'background-color': "#C9C8BF"}),
+            footer
         ],
         style={'padding-top': '1%', "background-color": "#1B2B3C",}
-    )
+    ), fluid=True)
 
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])

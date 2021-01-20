@@ -1,5 +1,5 @@
 import pathlib
-
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_interactive_graphviz
@@ -16,26 +16,22 @@ a = pd.read_csv(DATA_PATH / "a.csv")
 
 
 def create_layout():
-    return html.Div([
-        html.Div([
-            html.Div([], className="col-3"),
-            html.Div(
-                dcc.Dropdown(
-                    id='a',
-                    options=[{'label': i, 'value': i} for i in a.iloc[:, 0].unique()],
-                ), className='col-3'
-            ),
-            html.Div(id='my-output', className='col-3'),
-            html.Div([], className="col-3"),
-        ], className="row"),
-        html.Br(),
-        html.Div([
-            html.Div([], className='col-3'),
-            html.Div(id='b', className='col-6'),
-            html.Div([], className='col-3'),
-        ], className='row')
-
-    ], style={'align-items': 'center',
+    return html.Div([dbc.Row([
+        dbc.Col([], md=3),
+        dbc.Col(dcc.Dropdown(
+            id='a',
+            value='Value',
+            options=[{'label': i, 'value': i} for i in a.iloc[:, 0].unique()],
+        ), md=3),
+        dbc.Col(id='my-output', md=3),
+        dbc.Col([], md=3),
+    ]),
+    html.Hr(),
+    dbc.Row([
+        dbc.Col([], md=2),
+        dbc.Col(id='b', md=8, style={"height": "60vh"}),
+        dbc.Col([], md=2),
+    ])], style={'align-items': 'center',
               'padding-top': '1%',
               'height': 'auto'})
 
@@ -47,6 +43,7 @@ def create_layout():
 def update_output_div(input_value):
     return dcc.Dropdown(
         id='c',
+        value='Debt to market',
         options=[{'label': i, 'value': i} for i in a[a.iloc[:, 0] == input_value].iloc[:, 1]],
     )
 
@@ -60,7 +57,6 @@ def update_output_divi(asdf):
     c = f"digraph {b}"
 
     return dash_interactive_graphviz.DashInteractiveGraphviz(
-    id="graph",
-    dot_source=c, style={'display': 'inline-block', 'height': '600px'}
+    dot_source=c, style={'display': 'inline-block', 'height': '600px', 'width': '95%'}
 )
 
