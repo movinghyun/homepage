@@ -3,7 +3,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 
 from main import app
-from pages.portfolio import descriptor
+from pages.portfolio import descriptor, treemap
 
 
 def create_layout():
@@ -11,8 +11,8 @@ def create_layout():
         [
             dbc.Tabs(
                 [
-                    dbc.Tab(label="Tab 1", tab_id="tab-1"),
-                    dbc.Tab(label="Tab 2", tab_id="tab-2"),
+                    dbc.Tab(label="Descriptor", tab_id="tab-1"),
+                    dbc.Tab(label="Stock-Map", tab_id="tab-2"),
                 ],
                 id="tabs",
                 active_tab="tab-1",
@@ -50,5 +50,5 @@ def switch_tab(at):
     if at == "tab-1":
         return descriptor.create_layout()
     elif at == "tab-2":
-        return tab2_content
+        return treemap.create_layout()
     return html.P("This shouldn't ever be displayed...")
